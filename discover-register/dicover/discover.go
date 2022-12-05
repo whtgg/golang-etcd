@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"github.com/coreos/etcd/mvcc/mvccpb"
 	"go.etcd.io/etcd/clientv3"
 	"log"
@@ -43,7 +42,11 @@ func (sd *ServiceDiscover) WatchService(key string) error {
 		return err
 	}
 
-	fmt.Println(getResp)
+	for _, ev := range getResp.Kvs {
+		sd.SetServiceList(string(ev.Key), string(ev.Value))
+	}
+
+	go sd.watcher(key)
 	return nil
 
 }

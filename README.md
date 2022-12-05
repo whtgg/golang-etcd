@@ -50,6 +50,11 @@ Etcd改进
 ### 部署 
 docker-compose 部署
 
+### 代码结构
+* discover-register 服务注册和发现
+* distributed-lock  分布式锁
+> 分布式与单机环境最大的不同在于它不是多线程而是多进程。由于多线程可以共享堆内存，因此可以简单地采取内存作为标记存储位置。而多进程可能都不在同一台物理机上，就需要将标记存储在一个所有进程都能看到的地方。
+
 ### 问题
 ```
 go: etcd-test imports
@@ -64,6 +69,8 @@ go: etcd-test imports
 解决方式 go mod edit -replace github.com/coreos/bbolt=go.etcd.io/bbolt@v1.3.4
 
 ```
+ undefined: resolver.BuildOption undefined: resolver.ResolveNowOption 
+ 或者
  etcd-test imports
 	go.etcd.io/etcd/clientv3 tested by
 	go.etcd.io/etcd/clientv3.test imports
